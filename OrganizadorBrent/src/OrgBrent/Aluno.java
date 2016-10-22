@@ -1,7 +1,7 @@
 package OrgBrent;
 
 /**
- * Classe para aluno
+ * Modelo para aluno
  *
  * @author Adrian Costa, Ian Silva, Victor Carity
  * @since 22/10/2016
@@ -10,6 +10,7 @@ import java.nio.ByteBuffer;
 
 public class Aluno {
 
+    //atributos
     long matric; // 8 bytes
     String nome; // 60 bytes
     String end;  // 80 bytes
@@ -17,7 +18,9 @@ public class Aluno {
     String cpf;  // 15 bytes
     public static final int LENGTH = 165;
 
-    public Aluno(long matric, String nome, String end, short idade, String cpf) {
+    //Construtores
+    public Aluno(long matric, String nome, String end, short idade,
+            String cpf) {
         this.matric = matric;
         this.nome = corrigirTamanho(nome, 60);
         this.end = corrigirTamanho(end, 80);
@@ -39,6 +42,7 @@ public class Aluno {
         this.cpf = new String(bCpf);
     }
 
+    //Método que corrige a String, completando com " "
     private String corrigirTamanho(String str, final int tam) {
         int num = tam - str.length();
         if (str.length() > tam) {
@@ -51,6 +55,7 @@ public class Aluno {
         return str;
     }
 
+    //Método que retorna o buffer
     public ByteBuffer getBuffer() {
         ByteBuffer buf = ByteBuffer.allocate(LENGTH);
         buf.putLong(this.matric);
@@ -62,6 +67,7 @@ public class Aluno {
         return buf;
     }
 
+    //Métodos get e set
     public long getMatric() {
         return matric;
     }
