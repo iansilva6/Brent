@@ -54,7 +54,7 @@ public class OrganizadorBrent implements IFileOrganizer {
             long incEntrar = (((a.getMatric()) % (SIZE - 2)) + 1);
             long posicaoEntradaC1 = -1;
             long custo1 = 0;
-            for (long i = pos * Aluno.LENGTH; i > -1; i += (Aluno.LENGTH
+            for (long i = (pos * Aluno.LENGTH); i > -1; i += (Aluno.LENGTH
                     * incEntrar)) {
                 if (i >= SIZE * Aluno.LENGTH) {
                     i = i - SIZE * Aluno.LENGTH;
@@ -132,7 +132,39 @@ public class OrganizadorBrent implements IFileOrganizer {
 
     @Override
     public Aluno getReg(int matric) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        long pos = (matric % SIZE);
+        ByteBuffer buf = ByteBuffer.allocate(Aluno.LENGTH);
+        try {
+            this.canal.read(buf, pos * Aluno.LENGTH);
+            buf.flip();
+        } catch (IOException ex) {
+            Logger.getLogger(OrganizadorBrent.class.getName()).log(Level.SEVERE,
+                    null, ex);
+        }
+        Aluno a = new Aluno(buf);
+        if (a.getMatric() == matric) {
+            return a;
+        } else {
+            long inc = ((matric % (SIZE - 2)) + 1);
+            for (long i = pos * Aluno.LENGTH + (Aluno.LENGTH * inc);
+                     i != pos * Aluno.LENGTH; i += Aluno.LENGTH * inc) {
+                if (i >= SIZE * Aluno.LENGTH) {
+                    i = i - SIZE * Aluno.LENGTH;
+                }
+                ByteBuffer buf2 = ByteBuffer.allocate(Aluno.LENGTH);
+                try {
+                    this.canal.read(buf2, i);
+                } catch (IOException ex) {
+                    Logger.getLogger(OrganizadorBrent.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                buf2.flip();
+                Aluno b = new Aluno(buf2);
+                if (b.getMatric() == matric) {
+                    return b;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
