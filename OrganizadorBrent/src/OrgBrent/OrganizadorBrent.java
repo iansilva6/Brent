@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author Adrian Costa, Ian Silva, Victor Carity
  * @since 22/10/2016
  */
-public class OrganizadorBrent {
+public class OrganizadorBrent implements IFileOrganizer {
 
     //atributos
     private FileChannel canal;
@@ -27,6 +27,21 @@ public class OrganizadorBrent {
         RandomAccessFile raf = new RandomAccessFile(file, "rw");
         this.canal = raf.getChannel();
 
+    }
+
+    @Override
+    public boolean putReg(Aluno p) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Aluno getReg(int matric) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Aluno delReg(int matric) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
