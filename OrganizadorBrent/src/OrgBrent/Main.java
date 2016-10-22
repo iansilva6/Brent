@@ -19,6 +19,7 @@ public class Main {
         Aluno aluno1 = new Aluno(2016200011, "Pedro", "Rua Pirula",(short)11,
                  "001.999.444-11");
         organizador.putReg(aluno1);
+        organizador.delReg(2016200011);
         /*
         Aluno aluno2 = new Aluno(2016200022, "Bia", "Rua Pitua",(short)22,
                  "002.999.444-22");

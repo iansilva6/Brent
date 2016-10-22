@@ -147,7 +147,7 @@ public class OrganizadorBrent implements IFileOrganizer {
         } else {
             long inc = ((matric % (SIZE - 2)) + 1);
             for (long i = pos * Aluno.LENGTH + (Aluno.LENGTH * inc);
-                     i != pos * Aluno.LENGTH; i += Aluno.LENGTH * inc) {
+                    i != pos * Aluno.LENGTH; i += Aluno.LENGTH * inc) {
                 if (i >= SIZE * Aluno.LENGTH) {
                     i = i - SIZE * Aluno.LENGTH;
                 }
@@ -169,15 +169,54 @@ public class OrganizadorBrent implements IFileOrganizer {
 
     @Override
     public Aluno delReg(int matric) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        long pos = (matric % SIZE);
+        ByteBuffer buf = ByteBuffer.allocate(4);
+        try {
+            this.canal.read(buf, pos * Aluno.LENGTH);
+            buf.flip();
+        } catch (IOException ex) {
+            Logger.getLogger(OrganizadorBrent.class.getName()).log(Level.SEVERE,
+                    null, ex);
+        }
 
-    private long getHash(int matric) {
-        return (matric % SIZE);
-    }
-
-    private long getInc(int matric) {
-        return ((matric % (SIZE - 2)) + 1);
+        if (buf.getInt() == matric) {
+            Aluno b = new Aluno(-1, "", "", (short) 0, "");
+            try {
+                this.canal.write(b.getBuffer(), pos * Aluno.LENGTH);
+            } catch (IOException ex) {
+                Logger.getLogger(OrganizadorBrent.class.getName()).log(
+                        Level.SEVERE, null, ex);
+            }
+            return null;
+        } else {
+            long inc = ((matric % (SIZE - 2)) + 1);
+            for (long i = pos * Aluno.LENGTH + (Aluno.LENGTH * inc);
+                    i != pos * Aluno.LENGTH; i += Aluno.LENGTH * inc) {
+                if (i >= SIZE * Aluno.LENGTH) {
+                    i = i - SIZE * Aluno.LENGTH;
+                }
+                ByteBuffer buf2 = ByteBuffer.allocate(Aluno.LENGTH);
+                try {
+                    this.canal.read(buf2, i);
+                } catch (IOException ex) {
+                    Logger.getLogger(OrganizadorBrent.class.getName()).log(Level.SEVERE, null, ex);
+                    return null;
+                }
+                buf2.flip();
+                int n = buf2.getInt();
+                if (n == matric) {
+                    Aluno b = new Aluno(-1, "", "", (short) 0, "");
+                    try {
+                        this.canal.write(b.getBuffer(), i);
+                    } catch (IOException ex) {
+                        Logger.getLogger(OrganizadorBrent.class.getName()).log(
+                                Level.SEVERE, null, ex);
+                    }
+                    return null;
+                }
+            }
+        }
+        return null;
     }
 
 }
