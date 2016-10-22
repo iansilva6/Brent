@@ -19,6 +19,7 @@ public class OrganizadorBrent implements IFileOrganizer {
 
     //atributos
     private FileChannel canal;
+    private static final long SIZE = 8478101;//É PRIMO!
 
     //construtor
     public OrganizadorBrent(String pathToFile) throws FileNotFoundException {
