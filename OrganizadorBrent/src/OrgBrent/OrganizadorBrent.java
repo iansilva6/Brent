@@ -1,3 +1,4 @@
+package OrgBrent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,10 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * Classe que implementa o método de Brent
  *
- * @author Victor Carity
+ * @author Adrian Costa, Ian Silva, Victor Carity
  * @since 22/10/2016
  */
 public class OrganizadorBrent {

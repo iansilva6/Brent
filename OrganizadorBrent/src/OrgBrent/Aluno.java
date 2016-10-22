@@ -1,9 +1,9 @@
+package OrgBrent;
 
 /**
- *
  * Classe para aluno
  *
- * @author Victor Carity
+ * @author Adrian Costa, Ian Silva, Victor Carity
  * @since 22/10/2016
  */
 import java.nio.ByteBuffer;

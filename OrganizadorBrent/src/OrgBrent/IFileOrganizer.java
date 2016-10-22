@@ -1,7 +1,8 @@
+package OrgBrent;
 
 /**
- * Interface genérica que define as operações de organizadores
- * de arquivos de alunos em disco.
+ * Interface genérica que define as operações de organizadores de arquivos de
+ * alunos em disco.
  *
  * @author Tarcisio Rocha
  */
