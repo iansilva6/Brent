@@ -37,11 +37,12 @@ public class OrganizadorBrent implements IFileOrganizer {
         long pos = (a.getMatric() % SIZE);
         ByteBuffer buf = ByteBuffer.allocate(Aluno.LENGTH);
         try {
-            this.canal.read(buf, pos * Aluno.LENGTH);
+            this.canal.read(buf, (pos * Aluno.LENGTH));
         } catch (IOException ex) {
             return false;
         }
-        buf.flip();
+        //buf.flip();
+        buf.position(0);
         Aluno b = new Aluno(buf);
         if (b.getMatric() == 0) {
             try {
@@ -155,7 +156,8 @@ public class OrganizadorBrent implements IFileOrganizer {
                 try {
                     this.canal.read(buf2, i);
                 } catch (IOException ex) {
-                    Logger.getLogger(OrganizadorBrent.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OrganizadorBrent.class.getName()).log(
+                            Level.SEVERE, null, ex);
                 }
                 buf2.flip();
                 Aluno b = new Aluno(buf2);
@@ -199,7 +201,8 @@ public class OrganizadorBrent implements IFileOrganizer {
                 try {
                     this.canal.read(buf2, i);
                 } catch (IOException ex) {
-                    Logger.getLogger(OrganizadorBrent.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OrganizadorBrent.class.getName()).log(
+                            Level.SEVERE, null, ex);
                     return null;
                 }
                 buf2.flip();
